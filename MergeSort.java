@@ -86,18 +86,8 @@ public class MergeSort {
 		for(int i = 0; i < size; i++){
 			lst[i] = rand.nextInt(1000);
 		}
-		// print the original list
-		for(int c = 0; c < lst.length; c++){
-			System.out.println(lst[c]);
-		}
-		
-		System.out.println("\n-Sort Here-\n");
 		// call mergesort on the list with start index of 0, 
 		// and end index of the last element in the array.
 		mergeSort(lst, 0, lst.length - 1);
-		// print the sorted list
-		for(int c = 0; c < lst.length; c++){
-			System.out.println(lst[c]);
-		}
 	}
 }
