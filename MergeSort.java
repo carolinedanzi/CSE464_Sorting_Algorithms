@@ -10,62 +10,69 @@ public class MergeSort {
 	// holds sorted values before they are copied into the original list
 	protected static int[] newLst;
 
-	public static void merge(int[] lst, int lo, int mid, int hi){
-		// left is the current index in the left half
-		int left = lo;
-		// right is the current index in the right half
-		// right is mid + 1 because left increments until left <= mid
-		int right = mid + 1;
-		// iterate through the given range
-		for(int i = lo; i <= hi; i++){
-			// if left is out-of-bounds and the end of the range has
-			// not been reached
-			if (left > mid){
-				// then add the next value in the right side
-				// to the sorted list and increment right
-				newLst[i] = lst[right];
-				right++;
-			}else if(right > hi){
-				// else if left is out-of-bounds and the end of the range
-				// has not been reached, then add the next value from the
-				// left to the sorted list and increment left
-				newLst[i] = lst[left];
-				left++;
-			} else if(left <= mid &&
-				lst[left] <= lst[right]){
-				// if left is not greater than mid, and the current left 
-				// value is less than the current right value
-				// add the left value to the sorted list
-				newLst[i] = lst[left];
-				left++;
-			} else if(right <= hi) {
-				// else if right is not greater than hi,
-				// add the right value to the sorted list
-				newLst[i] = lst[right];
-				right++;
-			}	// else loop and don't swap
+	public static void merge(int[] nums, int[] left, int[] right) {
+		// pointers to where we are in each array
+		int lp = 0;
+		int rp = 0;
+		int i = 0;
+		
+		// Look at the elements at the left and right pointers and
+		// add the smaller one to nums
+		while(lp < left.length && rp < right.length) {
+			if(left[lp] < right[rp]) {
+				nums[i] = left[lp];
+				lp++;
+			} else {
+				nums[i] = right[rp];
+				rp++;
+			}
+			i++;
 		}
-		// copy the sorted values into the original list
-		for(int i = lo; i <= hi; i++){
-			lst[i] = newLst[i];
+		
+		// If all the elements in right were moved over to nums,
+		// add the rest of left to nums.
+		while(lp < left.length) {
+			nums[i] = left[lp];
+			lp++;
+			i++;
 		}
+		
+		// If all the elements in left were moved to nums,
+		// add the rest of right to nums.
+		while(rp < right.length) {
+			nums[i] = right[rp];
+			rp++;
+			i++;
+		}
+		
 	}
 	
-	public static void mergeSort(int[] lst, int lo, int hi){
-		// find the midpoint index
-		int mid = ((hi - lo) / 2) + lo;
-		// if the current range is 1 or 2 elements
-		if(hi - lo <= 1){
-			// then sort those elements
-			merge(lst, lo, mid, hi);
-		} else {
-			// otherwise sort the elements to the left of mid
-			mergeSort(lst, lo, mid);
-			// and sort the elements to the right of mid
-			mergeSort(lst, mid + 1, hi);
-			// then merge the left and right
-			merge(lst, lo, mid, hi);
+	public static void mergeSort(int[] nums) {
+		// If the array is of length 0 or 1, it is trivially sorted
+		if(nums.length <= 1) {
+			return;
 		}
+		
+		// Split the array into two arrays
+		int mid = nums.length / 2;
+		int[] left = new int[mid];
+		int[] right = new int[nums.length - mid];
+		
+		// The left array gets the left half of nums
+		for(int i = 0; i < left.length; i++) {
+			left[i] = nums[i];
+		}
+		// The right array gets the right half of nums
+		for(int i = 0; i < right.length; i++) {
+			right[i] = nums[mid + i];
+		}
+		
+		// Sort the left and right halves recursively
+		mergeSort(left);
+		mergeSort(right);
+		
+		// Merge the two halves
+		merge(nums, left, right);
 	}
 	
 	public static void main(String[] args) {
@@ -83,11 +90,18 @@ public class MergeSort {
 		int[] lst = new int[size];
 		newLst = new int[size];
 		Random rand = new Random();
+		System.out.println("before sorting: ");
 		for(int i = 0; i < size; i++){
 			lst[i] = rand.nextInt(1000);
+			System.out.print(lst[i] + " ");
 		}
 		// call mergesort on the list with start index of 0, 
 		// and end index of the last element in the array.
-		mergeSort(lst, 0, lst.length - 1);
+		mergeSort(lst);
+		
+		System.out.println("\nafter sorting:");
+		for(int i = 0; i < size; i++) {
+			System.out.print(lst[i] + " ");
+		}
 	}
 }
