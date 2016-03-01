@@ -49,30 +49,28 @@ public class MergeSort {
 	
 	public static void mergeSort(int[] nums) {
 		// If the array is of length 0 or 1, it is trivially sorted
-		if(nums.length <= 1) {
-			return;
+		if(nums.length > 1) {
+			// Split the array into two arrays
+			int mid = nums.length / 2;
+			int[] left = new int[mid];
+			int[] right = new int[nums.length - mid];
+			
+			// The left array gets the left half of nums
+			for(int i = 0; i < left.length; i++) {
+				left[i] = nums[i];
+			}
+			// The right array gets the right half of nums
+			for(int i = 0; i < right.length; i++) {
+				right[i] = nums[mid + i];
+			}
+			
+			// Sort the left and right halves recursively
+			mergeSort(left);
+			mergeSort(right);
+			
+			// Merge the two halves
+			merge(nums, left, right);
 		}
-		
-		// Split the array into two arrays
-		int mid = nums.length / 2;
-		int[] left = new int[mid];
-		int[] right = new int[nums.length - mid];
-		
-		// The left array gets the left half of nums
-		for(int i = 0; i < left.length; i++) {
-			left[i] = nums[i];
-		}
-		// The right array gets the right half of nums
-		for(int i = 0; i < right.length; i++) {
-			right[i] = nums[mid + i];
-		}
-		
-		// Sort the left and right halves recursively
-		mergeSort(left);
-		mergeSort(right);
-		
-		// Merge the two halves
-		merge(nums, left, right);
 	}
 	
 	public static void main(String[] args) {
