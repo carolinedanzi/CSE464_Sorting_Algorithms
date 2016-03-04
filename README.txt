@@ -8,10 +8,10 @@ CSE 464 Project One README
 This project uses Eclipse Luna with Java 8 (Java SE 1.8)
 
 Using Eclipse Luna, Go to File->Import->Existing Projects into Workspace
-Choose "Select root directory" then browse the ProjectOne folder and choose it.
+Choose "Select root directory" then browse to the ProjectOne folder and choose it.
 
 You should see ProjectOne in the PackageExplorer.  
-Open the properties for ProjectOne->Java Build Path->Libraries and remove any currently linked JAR files.
+Open the properties for ProjectOne then go to Java Build Path->Libraries and remove any currently linked JAR files.
 
 Then click on "Add JARs", navigate to the lib folder of ProjectOne and add the two (2) JAR files found there.
 
